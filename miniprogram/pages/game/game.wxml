@@ -1,2 +1,27 @@
 <!--pages/game.wxml-->
-<text>pages/game.wxml</text>
+<scroll-view
+  class="scrollarea"
+  scroll-x="true"
+  scroll-y="true"
+  enable-scale="true"
+  scale-min="0.5"
+  scale-max="3"
+  style="width: 100vw; height: 100vh;"
+>
+  <view class="board">
+    <view class="game-time">游戏时间：{{elapsedTime}} 秒</view>
+    <block wx:for="{{board}}" wx:key="index">
+      <view class="board-row">
+        <block wx:for="{{item}}" wx:key="id" wx:for-index="colIdx">
+          <button class="{{item[colIdx].status === 1 ? 'uncovered-cell' : 'covered-cell'}}"
+                  style="width:{{cellPx}}px;height:{{cellPx}}px;margin: 2px;"
+                  bindtap="onCellTap"
+                  data-row="{{index}}"
+                  data-col="{{colIdx}}">
+            <text wx:if="{{item[colIdx].status === 1 && item[colIdx].adjacentMines > 0}}">{{item[colIdx].adjacentMines}}</text>
+          </button>
+        </block>
+      </view>
+    </block>
+  </view>
+</scroll-view>

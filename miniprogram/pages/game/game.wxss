@@ -1,1 +1,44 @@
-/* pages/game.wxss */
+.scrollarea{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.board {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.board-row {
+  display: flex;
+}
+
+.covered-cell {
+  background-color:gainsboro;
+  border-radius: 8rpx;
+  border: 1rpx solid #ddd;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.uncovered-cell {
+  background-color:blue;
+  border-radius: 8rpx;
+  border: 1rpx solid #ddd;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.game-time {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  font-size: 18px;
+  color: #333;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 12px;
+  border-radius: 8px;
+  z-index: 10;
+}

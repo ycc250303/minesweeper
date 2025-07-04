@@ -1,66 +1,117 @@
-// pages/game.ts
+import { MineBoard,gameStatus, mineCellStatus } from '../../utils/minesweeper';
+
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    rows: 0,
+    cols: 0,
+    mines: 0,
+    board: [] as any[],
+    cellPx: 0,
+    firstClick: false,
+    mineBoard: null as MineBoard | null,
+    elapsedTime: 0,
+    timer: null as number | null
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
+  onLoad(options: any) {
+    const rows = parseInt(options.rows, 10);
+    const cols = parseInt(options.cols, 10);
+    const mines = parseInt(options.mines, 10);
 
+    const sysInfo: WechatMiniprogram.SystemInfo = wx.getSystemInfoSync();
+    const screenWidth = sysInfo.windowWidth - 40;
+
+    const gap = 2;
+    const cellPx = (screenWidth - gap * (cols + 1)) / cols;
+
+    // 生成空白地块
+    const board = [];
+    for (let i = 0; i < rows; i++) {
+      const row = [];
+      for (let j = 0; j < cols; j++) {
+        row.push({ id: `${i}-${j}`, status: mineCellStatus.init , adjacentMines: 0 });
+      }
+      board.push(row);
+    }
+
+    this.setData({ rows, cols, mines, board, cellPx });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+  // 处理格子点击事件
+  onCellTap(e: any) {
+    const row = parseInt(e.currentTarget.dataset.row, 10);
+    const col = parseInt(e.currentTarget.dataset.col, 10);
+    const mineBoard = this.data.mineBoard;
 
+    // 第一次点击
+    if (!this.data.firstClick) {
+      this.onFirstCellClick(row, col);
+      this.setData({ firstClick: true });
+    } 
+    else if (mineBoard && mineBoard.board[row][col].status === mineCellStatus.init) {
+      // 已经开始游戏
+      mineBoard.revealCell(row, col);
+      this.syncBoard();
+
+      // 判断输赢
+      if (mineBoard.status === gameStatus.win) { 
+        wx.showToast({ title: '恭喜你，胜利！', icon: 'success' });
+        this.stopTimer();
+      } else if (mineBoard.status === gameStatus.fail) { 
+        wx.showToast({ title: '游戏失败', icon: 'none' });
+        this.stopTimer();
+      }
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  // 同步 MineBoard 到前端 board 数据
+  syncBoard() {
+    const mineBoard = this.data.mineBoard;
+    if (!mineBoard) return;
 
+    const board = this.data.board.map((row, rowIdx) =>
+      row.map((cell: any, colIdx: number) => ({
+        ...cell,
+        status: mineBoard.board[rowIdx][colIdx].status,
+        adjacentMines: mineBoard.board[rowIdx][colIdx].adjacentMines
+      }))
+    );
+    this.setData({ board });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  // 用户第一次点击
+  onFirstCellClick(firstClickRow: number, firstClickCol: number) {
+    // 创建MineBoard实例
+    const mineBoard = new MineBoard(this.data.rows, this.data.cols, firstClickRow, firstClickCol, this.data.mines);
+    
+    this.setData({ mineBoard });
+    mineBoard.revealCell(firstClickRow, firstClickCol);
+    this.syncBoard();
+    console.log('第一次点击，创建MineBoard', mineBoard, 'firstClickRow', firstClickRow, 'firstClickCol', firstClickCol);
+    
+    // 启动计时器
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+    }
+    const timer = setInterval(() => {
+      this.setData({ elapsedTime: this.data.elapsedTime + 1 });
+    }, 1000);
+    this.setData({ timer });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
+  // 关闭计时器
+  stopTimer() {
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+      this.setData({ timer: null });
+    }
+  },
+
   onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+      this.setData({ timer: null });
+    }
   }
-})
+});

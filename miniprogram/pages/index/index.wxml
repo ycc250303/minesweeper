@@ -1,27 +1,11 @@
 <!--index.wxml-->
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
-    </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+    <view class = "choose-level-wrapper">
+      <text class="choose-level-text">请选择难度</text>
+      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="9" data-cols="9" data-mines="10">初级:9*9,10个雷</button>
+      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="16" data-cols="16" data-mines="40">中级:16*16,40个雷</button>
+      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="40" data-cols="16" data-mines="99">高级:40*16,99个雷</button>
     </view>
   </view>
 </scroll-view>
