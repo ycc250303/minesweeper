@@ -5,7 +5,6 @@
 }
 
 .board {
-  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,30 +14,72 @@
   display: flex;
 }
 
-.covered-cell {
-  background-color:gainsboro;
-  border-radius: 8rpx;
+.uncovered-cell,
+.covered-cell ,
+.fail-cell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1rpx solid #ddd;
+  box-sizing: border-box;
+  width: var(--cell-size, 32px);
+  height: var(--cell-size, 32px);
+  border-radius: 12rpx;
   border: 1rpx solid #ddd;
   box-sizing: border-box;
   padding: 0;
+}
+
+.covered-cell{
+  background-color:gainsboro;
 }
 
 .uncovered-cell {
-  background-color:blue;
-  border-radius: 8rpx;
-  border: 1rpx solid #ddd;
-  box-sizing: border-box;
-  padding: 0;
+  background-color:white;
+}
+
+.fail-cell
+
+.cell-content {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2em; 
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+button.covered-cell .cell-content,
+button.uncovered-cell .cell-content {
+  font-size: calc(0.7 * var(--cell-size, 32px));
+}
+
+.game-info-row {
+  display: flex;
+  margin-top:10px;
+  margin-bottom: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;   
+  margin-bottom: 16rpx;
+}
+
+.game-flags {
+  margin-right: 32rpx;
+  font-size: 32rpx;
 }
 
 .game-time {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  font-size: 18px;
-  color: #333;
-  background: rgba(255,255,255,0.8);
-  padding: 4px 12px;
+  font-size: 32rpx;
+  /* 不要用 position: absolute; */
+  padding: 0;
   border-radius: 8px;
-  z-index: 10;
 }

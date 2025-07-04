@@ -4,8 +4,8 @@
     <view class = "choose-level-wrapper">
       <text class="choose-level-text">请选择难度</text>
       <button class="choose-level-button" bindtap="onChooseLevel" data-rows="9" data-cols="9" data-mines="10">初级:9*9,10个雷</button>
-      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="16" data-cols="16" data-mines="40">中级:16*16,40个雷</button>
-      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="40" data-cols="16" data-mines="99">高级:40*16,99个雷</button>
+      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="12" data-cols="12" data-mines="20">中级:12*12,20个雷</button>
+      <button class="choose-level-button" bindtap="onChooseLevel" data-rows="16" data-cols="16" data-mines="40">高级:16*16,40个雷</button>
     </view>
   </view>
 </scroll-view>
