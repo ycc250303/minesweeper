@@ -16,7 +16,7 @@
     <block wx:for="{{board}}" wx:key="index">
       <view class="board-row">
         <block wx:for="{{item}}" wx:key="id" wx:for-item="cell" wx:for-index="colIdx">
-          <button class="{{item[colIdx].status === 1 ? 'uncovered-cell' : 'covered-cell'}}"
+          <button class="{{(index === failCellRow && colIdx === failCellCol) ? 'fail-cell' : (item[colIdx].status === 1 ? 'uncovered-cell' : 'covered-cell')}}"
                   style="width:{{cellPx}}px;height:{{cellPx}}px;margin: 2px;--cell-size:{{cellPx}}px"
                   bindtap="onCellClick"
                   bindlongpress="onCellLongPress"
@@ -27,5 +27,12 @@
         </block>
       </view>
     </block>
+  </view>
+  <view wx:if="{{resultMessage}}" class="game-result-box">
+    <view class="game-result">{{resultMessage}}</view>
+    <view class="game-result-buttons">
+      <button class="restart-button" bindtap="onRestartGame">重新开始这一局</button>
+      <button class="newgame-button" bindtap="onNewGame">再来一局</button>
+    </view>
   </view>
 </scroll-view>

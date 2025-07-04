@@ -61,7 +61,9 @@ export class MineBoard { // 游戏盘
       this.board.push(row);
     }
 
-    this.createGameBoard(firstClickRow, firstClickCol, minesCount);
+    if (firstClickRow >= 0 && firstClickCol >= 0) {
+      this.createGameBoard(firstClickRow, firstClickCol, minesCount);
+    }
   }
 
   // 创建游戏
@@ -189,19 +191,27 @@ export class MineBoard { // 游戏盘
   }
 
   // 双击翻开周围地块
-  doubleClickToReveal(targetRow: number, targetCol: number) {
+  doubleClickToReveal(targetRow: number, targetCol: number): { row: number, col: number } | null {
     const targetCell = this.board[targetRow][targetCol];
-    if (targetCell.status === mineCellStatus.reveal 
-      && targetCell.adjacentMines > 0 
-      && targetCell.adjacentFlags === targetCell.adjacentMines) {
+    if (
+      targetCell.status === mineCellStatus.reveal &&
+      targetCell.adjacentMines > 0 &&
+      targetCell.adjacentFlags === targetCell.adjacentMines
+    ) {
       for (let i = 0; i < this.direction.length; i++) {
         let targetX = targetRow + this.direction[i][0];
         let targetY = targetCol + this.direction[i][1];
-        if (this.isVaildCoord(targetX, targetY) 
-          && this.board[targetX][targetY].status === mineCellStatus.init) {
+        if (
+          this.isVaildCoord(targetX, targetY) &&
+          this.board[targetX][targetY].status === mineCellStatus.init
+        ) {
           this.revealCell(targetX, targetY);
+          if (this.status === gameStatus.fail && this.board[targetX][targetY].isMine) {
+            return { row: targetX, col: targetY };
+          }
         }
       }
     }
+    return null;
   }
 }
