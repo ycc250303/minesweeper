@@ -37,3 +37,67 @@ page {
   position: relative;
 }
 
+.choose-level-button:active{
+  background-color: darkblue;
+}
+
+.custom-mode {
+  width: 400rpx;
+  background-color: #f8f9fa;
+  border: 2rpx solid #dee2e6;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+
+.input-label {
+  width: 100%;
+  height: 60rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 12rpx;
+  padding: 0 12rpx;
+  font-size: 28rpx;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 10rpx;
+  margin-top: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+.custom-buttons {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 32rpx;
+}
+
+.confirm-button, .cancel-button {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.confirm-button {
+  background-color:green;
+  color: white;
+}
+
+.confirm-button:active {
+  background-color:darkgreen;
+}
+
+.cancel-button {
+  background-color:gray;
+  color: white;
+}
+
+.cancel-button:active {
+  background-color:darkgrey;
+}
+
+

@@ -89,6 +89,7 @@ Page({
             mineBoard.revealCell(row, col);
             const newBoard = generateBoardView(mineBoard, mineCellStatus);
             let resultMessage = this.data.resultMessage;
+
             if (mineBoard.status === gameStatus.win) {
               resultMessage = '🎉 恭喜，您赢了！';
               this.stopTimer();
@@ -97,12 +98,13 @@ Page({
               resultMessage = '💥 不好意思，您输了，再接再厉！';
               this.stopTimer();
             }
+
             if (mineBoard.status === gameStatus.fail && wasMine) {
               this.setData({ mineBoard, board: newBoard, flagsCount: mineBoard.flagsCount, failCellRow: row, failCellCol: col, resultMessage });
             }
             else {
               this.setData({ mineBoard, board: newBoard, flagsCount: mineBoard.flagsCount, resultMessage });
-            }
+            } 
           }
         }
       }, 300)
@@ -122,7 +124,8 @@ Page({
         if (mineBoard.status === gameStatus.win) {
           resultMessage = '🎉 恭喜，您赢了！';
           this.stopTimer();
-        } else if (mineBoard.status === gameStatus.fail) {
+        } 
+        else if (mineBoard.status === gameStatus.fail) {
           resultMessage = '💥 不好意思，您输了，再接再厉！';
           this.stopTimer();
           if (failCell) {
@@ -153,6 +156,7 @@ Page({
     this.setData({ timer });
   },
 
+  // 停止计时器
   stopTimer() {
     if (this.data.timer) {
       clearInterval(this.data.timer);
@@ -178,6 +182,7 @@ Page({
       return;
     }
     console.log("长按操作");
+    
     if (mineBoard) {
       const cell = mineBoard.board[row][col];
       if (cell.status === mineCellStatus.init) {

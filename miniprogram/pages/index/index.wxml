@@ -6,6 +6,17 @@
       <button class="choose-level-button" bindtap="onChooseLevel" data-rows="9" data-cols="9" data-mines="10">初级:9*9,10个雷</button>
       <button class="choose-level-button" bindtap="onChooseLevel" data-rows="12" data-cols="12" data-mines="20">中级:12*12,20个雷</button>
       <button class="choose-level-button" bindtap="onChooseLevel" data-rows="16" data-cols="16" data-mines="40">高级:16*16,40个雷</button>
+      <button class="choose-level-button" bindtap="onCustomModeClick">自定义模式</button>
+
+      <view class = "custom-mode" wx:if="{{showCustomMode}}">
+          <input class="input-label" type="number" placeholder="请输入行数(9-16)" value="{{customRows}}" bindinput="onRowsInput"/>
+          <input class="input-label" type="number" placeholder="请输入列数(9-16)" value="{{customCols}}" bindinput="onColsInput"/>
+          <input class="input-label" type="number" placeholder="请输入雷数(10-40)" value="{{customMines}}" bindinput="onMinesInput"/>
+        <view class = "custom-buttons">
+          <button class="confirm-button" bindtap="onConfirmCustom">确认</button>
+          <button class="cancel-button" bindtap="onCancelCustom">取消</button>
+        </view>
+      </view>
     </view>
   </view>
 </scroll-view>
